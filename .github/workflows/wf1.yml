@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: '14'
       - run: npm install --only=dev
-      - run: npm run check-pretty
+      - run: npx prettier --c .
 
   back:
     defaults:
@@ -32,4 +32,4 @@ jobs:
           node-version: '14'
       - run: npm install --only=dev
       - run: npm run lint
-      - run: npm run check-pretty
+      - run: npx prettier --c .
