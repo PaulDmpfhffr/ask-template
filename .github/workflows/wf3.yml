@@ -1,35 +1,34 @@
-name: React App
+name: Build React
 
 on:
   push:
     branches: [ main ]
-    
+  pull_request:
+    branches: [ main ]
+
 jobs:
-  react:
+  front:
     defaults:
       run:
         working-directory: ./front
 
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: read
-      packages: write
-
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup NodeJS
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14
-      - run: npm install
-      - run: npm run build
-      - name: Deploy file to server
-        uses: wlixcc/SFTP-Deploy-Action@v1.0
-        with:
-          username: 'ls1'
-          server: '${{ secrets.SERVER_IP }}'
-          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-          local_path: './build/*'
-          remote_path: '/var/www/html'
-          args: '-o ConnectTimeout=5'
+    - uses: actions/checkout@v2
+    - name: Setup NodeJS
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14
+    - run: npm install
+    - run: npm run build
+    - name: Create SSH
+      run: mkdir ~/.ssh
+    - name: Install SSH Key
+      run: echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+    - name: Setup Perm
+      run: chmod 600 ~/.ssh/id_rsa
+    - name: Adding Known Hosts
+      run: ssh-keyscan -H -p 4242 ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+    - name: Deploy with rsync
+      run: rsync -avz -e 'ssh -p 4242 -i ~/.ssh/id_rsa' ./build/ github@${{ secrets.SERVER_IP }}:/var/www/app/
