@@ -18,7 +18,6 @@ jobs:
           node-version: '14'
       - run: npm install --only=dev
       - run: npm run check-pretty
-      - run: eslint ./*
 
   back:
     defaults:
@@ -34,4 +33,3 @@ jobs:
       - run: npm install --only=dev
       - run: npm run lint
       - run: npm run check-pretty
-      - run: eslint ./*
