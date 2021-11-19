@@ -1,0 +1,20 @@
+name: React App
+
+on:
+  push:
+    branches: [ main ]
+    
+jobs:
+  react:
+    defaults:
+      run:
+        working-directory: ./front
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - run: npm run build
