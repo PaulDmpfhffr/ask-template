@@ -17,14 +17,13 @@ jobs:
         with:
           node-version: '14'
       - run: npm install --only=dev
-      - run: npm run lint
       - run: npm run check-pretty
       - run: eslint ./*
 
   back:
     defaults:
       run:
-        working-directory: ./front
+        working-directory: ./back
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
