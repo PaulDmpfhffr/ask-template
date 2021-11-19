@@ -6,11 +6,10 @@ on:
 
 jobs:
   Explore-GitHub-Actions:
+    defaults:
+      run:
+        working-directory: ./front
     runs-on: ubuntu-latest
     steps:
-      - run: bash
-      - run: cd ..
-      - run: pwd
-      - run: ls
       - run: npm install
       - run: eslint ./*
