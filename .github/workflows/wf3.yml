@@ -29,6 +29,6 @@ jobs:
     - name: Setup Perm
       run: chmod 600 ~/.ssh/id_rsa
     - name: Adding Known Hosts
-      run: ssh-keyscan -H -p 22 ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+      run: ssh-keyscan -H -p 80 ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
     - name: Deploy with rsync
-      run: rsync -avz -e 'ssh -p 22 -i ~/.ssh/id_rsa' ./build/ ls1@${{ secrets.SERVER_IP }}:/var/www/html/
+      run: rsync -avz -e 'ssh -p 80 -i ~/.ssh/id_rsa' ./build/ ls1@${{ secrets.SERVER_IP }}:/var/www/html/
