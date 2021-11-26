@@ -31,4 +31,4 @@ jobs:
     - name: Adding Known Hosts
       run: ssh-keyscan -H -p 4242 ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
     - name: Deploy with rsync
-      run: rsync -avz -e 'ssh -p 4242 -i ~/.ssh/id_rsa' ./build/ github@${{ secrets.SERVER_IP }}:/var/www/app/
+      run: rsync -avz -e 'ssh -p 4242 -i ~/.ssh/id_rsa' ./build/ ls1@${{ secrets.SERVER_IP }}:/var/www/html/
